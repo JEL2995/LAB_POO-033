@@ -1,0 +1,26 @@
+Laboratorio 10 - Preguntas de reflexion
+
+1. Diferencia entre extends Thread e implements Runnable
+Al extender Thread, la clase es un hilo y hereda start(), join() e interrupt().
+Al implementar Runnable, la clase define una tarea en run() que se entrega a
+un Thread. Preferiria Runnable para separar la tarea de su ejecucion y poder
+extender otra clase, porque Java solo permite heredar de una clase. Thread es
+util para una demostracion sencilla o para especializar el propio hilo.
+
+2. Race condition en ContadorCompartido
+Una condicion de carrera ocurre cuando el resultado depende del orden en que
+los hilos acceden a un estado compartido sin coordinacion. contador++ lee el
+valor, le suma uno y lo escribe. Dos hilos pueden leer el mismo valor y escribir
+ambos el mismo incremento: se pierde una actualizacion. Por eso cinco hilos
+con 1000 incrementos cada uno pueden producir menos de 5000. Tambien pueden
+dar 5000 en algunas ejecuciones; el fallo no esta garantizado. synchronized
+permite que un solo hilo a la vez ejecute incrementarSeguro() sobre la misma
+instancia, por lo que el total despues de los join() es 5000.
+
+3. Para que sirve join()
+join() espera a que termine el hilo indicado. Iniciamos primero todos los hilos
+y luego esperamos a cada uno para conservar la concurrencia. Si quitaramos
+los join() antes de mostrarResultados(), Main podria mostrar una tabla vacia
+o incompleta mientras todavia se ejecutan combates. Ademas, join() garantiza
+que las escrituras realizadas por el hilo terminado sean visibles para el
+hilo que espero, antes de consultar o resetear el contador.
