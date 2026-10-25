@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda de Contactos</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            margin: 40px;
+        }
+
+        .caja {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #4a90d9;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #f0c040;
+            text-align: center;
+        }
+
+        .boton {
+            display: inline-block;
+            background: #4a90d9;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .boton:hover {
+            background: #357abd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #4a90d9;
+            text-align: left;
+        }
+
+        th {
+            background: #0f3460;
+            color: #f0c040;
+        }
+
+        tr:nth-child(even) {
+            background: #1a2a4a;
+        }
+
+        .mensaje {
+            text-align: center;
+            color: #aaa;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="caja">
+
+        <h1>Agenda de Contactos</h1>
+
+        <!-- Enlace para agregar contacto -->
+        <a href="/nuevo" class="boton">
+            + Agregar Contacto
+        </a>
+
+        <!-- Mensaje cuando no hay contactos -->
+        <div th:if="${#lists.isEmpty(contactos)}">
+            <p class="mensaje">
+                No hay contactos registrados.
+            </p>
+        </div>
+
+        <!-- Tabla cuando existen contactos -->
+        <div th:unless="${#lists.isEmpty(contactos)}">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="c : ${contactos}">
+                        <td th:text="${c.nombre}">-</td>
+                        <td th:text="${c.apellido}">-</td>
+                        <td th:text="${c.email}">-</td>
+                        <td th:text="${c.telefono}">-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
